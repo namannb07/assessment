@@ -46,9 +46,9 @@ class Menu
 
   def signin
     print "Email: "
-    email = gets.chomp
+    email = gets.chop
     print "Password: "
-    password = gets.chomp
+    password = gets.chop
 
     user = @store.find_user(email)
 
@@ -92,9 +92,9 @@ class Menu
 
   def admin_login
     print "Email: "
-    email = gets.chomp
+    email = gets.chop
     print "Password: "
-    password = gets.chomp
+    password = gets.chop
     if email == @admin.email && @admin.authenticate(password)
       admin_menu
     else
