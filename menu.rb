@@ -34,6 +34,14 @@ class Menu
     end
   end
 
+  def validate_email(email)
+    return email =~ URI::MailTo::EMAIL_REGEXP
+  end
+
+  def validate_password(password)
+    return password.match?(PASSWORD_REGEX)
+  end
+
   def signup
     print "Please enter your email: "
     email = gets.chomp
@@ -41,14 +49,14 @@ class Menu
     password = gets.chomp
 
     @usr = Users.new
-
-    if email =~ URI::MailTo::EMAIL_REGEXP && password.match?(PASSWORD_REGEX)
+    valid = validate_email(email) && validate_password(password)
+    if valid
       @store.add_user(User.new(email, password))
       @usr.sign_up(email,password)
-    elsif !password.match?(PASSWORD_REGEX)
-      puts "Please enter a valid password"
+    elsif !validate_email(email)
+      puts "Please enter a email"
     else 
-    puts "Please enter a valid email address"
+      puts "Please enter a valid password"
     end
   end
 
@@ -62,14 +70,16 @@ class Menu
 
     @usr = Users.new
 
-    valid = password.match?(PASSWORD_REGEX) && email =~ URI::MailTo::EMAIL_REGEXP
+    valid = validate_email(email) && validate_password(password)
 
-    if @usr.login(email,password) && valid
+    if valid
       if @usr.login(email,password)
         user_menu(user)
       end
+    elsif !validate_email(email)
+      puts "Please enter a valid email address"
     else
-      puts "Invalid credentials"
+      puts "Please enter a valid password"
     end
   end
 
