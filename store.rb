@@ -14,7 +14,7 @@ class Store
   end
 
   def seed_products
-    @products << Product.new(1, "Laptop", 1000, 5)
+    @products << Product.new(1, "Leptop", 1000, 5)
     @products << Product.new(2, "Phone", 500, 10)
     @products << Product.new(3, "Headphones", 100, 15)
   end

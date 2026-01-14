@@ -4,6 +4,7 @@ require_relative('order')
 require_relative('product')
 require_relative('store')
 require_relative('user')
+require('uri')
 
 class Menu
   def initialize
@@ -35,8 +36,12 @@ class Menu
     print "Please enter your password: "
     password = gets.chop
 
-    @store.add_user(User.new(email, password))
-    puts "Signup successful"
+    if email =~ URI::MailTo::EMAIL_REGEXP
+      @store.add_user(User.new(email, password))
+      puts "Signup successful"
+    else 
+      puts "Please enter a valid email address"
+    end
   end
 
   def signin
@@ -47,7 +52,7 @@ class Menu
 
     user = @store.find_user(email)
 
-    if user&.authenticate(password)
+    if user&.authenticate(password) && email =~ URI::MailTo::EMAIL_REGEXP
       user_menu(user)
     else
       puts "Invalid credentials"
@@ -62,7 +67,8 @@ class Menu
       when 1 then view_products
       when 2
         print "Product ID: "
-        product = @store.find_product(gets.to_i)
+        product_id = gets.to_i
+        product = @store.find_product(product_id)
         print "Quantity: "
         qty = gets.to_i
         cart.add_product(product, qty)

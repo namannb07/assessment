@@ -32,8 +32,8 @@ class Product
   end
 
   def initialize(id, name, price, quantity)
-    raise "Invalid price" if price < 0
-    raise "Invalid quantity" if quantity < 0
+    raise "invalid prise" if price < 0
+    raise "Invalid quantiti" if quantity < 0
 
     @id = id
     @name = name
