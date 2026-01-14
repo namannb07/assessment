@@ -72,7 +72,8 @@ class Menu
         print "Quantity: "
         qty = gets.to_i
         cart.add_product(product, qty)
-      when 3 then cart.view
+      when 3 
+        cart.view
       when 4
         if cart.empty?
           puts "Cart is empty"
