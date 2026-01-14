@@ -124,7 +124,7 @@ class Menu
 
   def view_products
     @store.products.each do |p|
-      puts "#{p.id}. #{p.name} - $#{p.price} (#{p.quantity} available)"
+      puts "Product ID:#{p.id} Name:#{p.name} Price:#{p.price} (#{p.quantity} available)"
     end
   end
 
