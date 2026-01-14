@@ -1,12 +1,15 @@
 require('./admin')
-require_relative('cart')
-require_relative('order')
-require_relative('product')
-require_relative('store')
-require_relative('user')
+require('./cart')
+require('./order')
+require('./product')
+require('./store')
+require('./user')
+require('./check')
 require('uri')
 
 class Menu
+  PASSWORD_REGEX = /\A(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&+=]).{8,}\z/
+  
   def initialize
     @store = Store.new
   end
@@ -37,11 +40,17 @@ class Menu
     print "Please enter your password: "
     password = gets.chop
 
-    if email =~ URI::MailTo::EMAIL_REGEXP
+
+
+    @usr = Users.new
+
+    if email =~ URI::MailTo::EMAIL_REGEXP && password.match?(PASSWORD_REGEX)
       @store.add_user(User.new(email, password))
-      puts "Signup successful"
+      @usr.sign_up(email,password)
+    elsif !password.match?(PASSWORD_REGEX)
+      puts "Please enter a valid password"
     else 
-      puts "Please enter a valid email address"
+    puts "Please enter a valid email address"
     end
   end
 
@@ -53,8 +62,14 @@ class Menu
 
     user = @store.find_user(email)
 
-    if user&.authenticate(password) && email =~ URI::MailTo::EMAIL_REGEXP
-      user_menu(user)
+    @usr = Users.new
+
+    valid = password.match?(PASSWORD_REGEX) && email =~ URI::MailTo::EMAIL_REGEXP
+
+    if @usr.login(email,password) && valid
+      if @usr.login(email,password)
+        user_menu(user)
+      end
     else
       puts "Invalid credentials"
     end

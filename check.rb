@@ -1,40 +1,34 @@
-class User
-  def initialize(name,age)
-    @name = name
-    @age = age
-  end
+class Users 
+  def sign_up(username,password)
+    registered_users = File.read("Database/username.txt")    
 
-  def name
-    @name
-  end
+    present = registered_users.include?(username)
 
-  def age
-    @age
+    if(present == true)
+      puts "Username already present please try the different one\n"
+    else 
+      File.open("Database/username.txt","a") do |file|
+        file.puts(username)
+      end
+      File.open("Database/password.txt","a") do |file|
+        file.puts(password)
+      end
+      puts "User registered successfully"
+    end
   end
-end
-
-class Store 
-  def initialize
-    @users = []
-  end
-
-  def createUser(name,age)
-    @name = name
-    @age = age
-    @users.append(User.new(@name,@age))
-  end
-
-  def printUsers
-    @users.each do |user|
-      puts "Name : #{user.name} and Age : #{user.age}"
+  
+  def login(username,password) 
+    registered_username = File.read("Database/username.txt")
+    registered_userpassword = File.read("Database/password.txt")
+    
+    present_username = registered_username.include?(username)
+    present_password = registered_userpassword.include?(password)
+    if(present_username && present_password)
+      puts "User logged in successfully"
+      return true
+    else 
+      puts "Please enter a valid credentials"
+      return false
     end
   end
 end
-
-aa = Store.new
-aa.createUser("Naman",22)
-aa.createUser("Ritsh",25)
-aa.createUser("Rahul",21)
-aa.createUser("Ajay",23)
-
-aa.printUsers
