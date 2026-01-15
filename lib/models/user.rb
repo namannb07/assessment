@@ -2,6 +2,19 @@ require_relative 'order'
 require_relative 'cart'
 
 class User
+  @@users = []
+
+  def self.all
+    @@users
+  end
+
+  def self.add(user)
+    @@users << user
+  end
+
+  def self.find(email)
+    @@users.find { |u| u.email == email }
+  end
   
   def initialize(email, password)
     @email = email
