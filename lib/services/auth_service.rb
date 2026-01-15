@@ -1,13 +1,12 @@
-class Users
-  FILE = "credential.txt"
-
-  def initialize
-    File.write(FILE,"") unless File.exist?(FILE)
+class AuthService
+  def initialize(file_path)
+    @file_path = file_path
+    File.write(@file_path,"") unless File.exist?(@file_path)
   end
 
   def load_users 
     users = {}
-    File.readlines(FILE).each do |line|
+    File.readlines(@file_path).each do |line|
       username, password = line.strip.split("=")
       users[username] = password
     end
@@ -16,7 +15,7 @@ class Users
   end
   
   def save_users(users)
-    File.open(FILE,"w") do |file|
+    File.open(@file_path,"w") do |file|
       users.each do |username,password|
         file.puts("#{username}=#{password}")
       end

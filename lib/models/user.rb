@@ -1,5 +1,5 @@
-require('./store/order')
-require('./store/cart')
+require_relative 'order'
+require_relative 'cart'
 
 class User
   
@@ -24,4 +24,3 @@ class User
     @orders << order
   end
 end
-
