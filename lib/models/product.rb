@@ -1,4 +1,24 @@
 class Product
+  @@products = []
+
+  def self.all
+    @@products
+  end
+
+  def self.add(product)
+    @@products << product
+  end
+
+  def self.find(id)
+    @@products.find { |p| p.id == id }
+  end
+
+  def self.seed
+    @@products << Product.new(1, "Leptop", 1000, 5)
+    @@products << Product.new(2, "Phone", 500, 10)
+    @@products << Product.new(3, "Headphones", 100, 15)
+  end
+
   def id
     @id 
   end

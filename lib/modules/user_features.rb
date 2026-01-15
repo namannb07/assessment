@@ -11,7 +11,7 @@ module UserFeatures
       when 2
         print "Product ID: "
         product_id = gets.to_i
-        product = @store.find_product(product_id)
+        product = Product.find(product_id)
         print "Quantity: "
         qty = gets.to_i
         cart.add_product(product, qty)
@@ -37,7 +37,7 @@ module UserFeatures
   end
 
   def view_products
-    @store.products.each do |p|
+    Product.all.each do |p|
       puts "Product ID:#{p.id} Name:#{p.name} Price:#{p.price} (#{p.quantity} available)"
     end
   end

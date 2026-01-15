@@ -10,7 +10,7 @@ module AuthFeatures
 
     valid = validate_email(email) && validate_password(password)
     if valid
-      @store.add_user(User.new(email, password))
+      User.add(User.new(email, password))
       @usr.sign_up(email,password)
     end
     if !validate_email(email)
@@ -27,7 +27,7 @@ module AuthFeatures
     print "Password: "
     password = gets.chomp
 
-    user = @store.find_user(email)
+    user = User.find(email)
 
     valid = validate_email(email) && validate_password(password)
 
@@ -50,14 +50,14 @@ module AuthFeatures
     print "Please enter your password: "
     password = gets.chomp
 
-    exist = @store.find_user(email)
+    exist = User.find(email)
 
     valid = validate_email(email) && validate_password(password)
 
     if valid
       if !exist
         # Using Admin class for consistency
-        @store.add_user(Admin.new(email, password))
+        User.add(Admin.new(email, password))
         # Saving to admin.txt via @admin_auth
         @admin_auth.sign_up(email, password)
         puts "Admin created successfully\nEmail : #{email}"

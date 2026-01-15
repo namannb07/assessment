@@ -1,4 +1,4 @@
-require_relative 'marketplace'
+require_relative 'models/product'
 require_relative 'services/auth_service'
 require_relative 'modules/validator'
 require_relative 'modules/user_features'
@@ -13,7 +13,7 @@ class App
   include AuthFeatures
 
   def initialize
-    @store = Marketplace.new
+    Product.seed
     @usr = AuthService.new("credential.txt")
     @admin_auth = AuthService.new("admin.txt")
 
@@ -25,7 +25,7 @@ class App
     admin_users = @admin_auth.load_users
     if admin_users.empty?
       @admin_auth.sign_up("admin@example.com", "Admin@123")
-      @store.add_user(Admin.new("admin@example.com", "Admin@123"))
+      User.add(Admin.new("admin@example.com", "Admin@123"))
     end
   end
 

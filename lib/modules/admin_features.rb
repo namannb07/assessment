@@ -29,14 +29,14 @@ module AdminFeatures
     price = gets.to_f
     print "Quantity: "
     qty = gets.to_i
-    id = @store.products.size + 1
-    @store.products << Product.new(id, name, price, qty)
+    id = Product.all.size + 1
+    Product.add(Product.new(id, name, price, qty))
   end
 
   def update_product
     print "Product ID: "
     product_id = gets.to_i
-    product = @store.find_product(product_id)
+    product = Product.find(product_id)
     print "New Price: "
     product.price = gets.to_f
     print "New Quantity: "
@@ -46,7 +46,7 @@ module AdminFeatures
   def delete_product
     print "Product ID: "
     product_id = gets.to_i
-    product = @store.find_product(product_id)
-    @store.products.delete(product)
+    product = Product.find(product_id)
+    Product.all.delete(product)
   end
 end
