@@ -1,4 +1,4 @@
-require('./store/product')
+require_relative 'product'
 
 class Order
   def initialize(items)

@@ -1,5 +1,5 @@
-require('./store/order')
-require('./store/product')
+require_relative 'order'
+require_relative 'product'
 
 class Cart
   def initialize

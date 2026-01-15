@@ -1,4 +1,6 @@
-class Store
+require_relative 'models/product'
+
+class Marketplace
   def initialize
     @products = []
     @users = []
