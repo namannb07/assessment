@@ -26,7 +26,7 @@ class Cart
     @items.each do |product, qty|
       product.quantity -= qty
     end
-    order = Order.new(@items)
+    order = Order.new(@items.clone)
     @items.clear
     order
   end
