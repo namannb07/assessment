@@ -1,3 +1,6 @@
+require('./store/order')
+require('./store/cart')
+
 class User
   
   def initialize(email, password)
@@ -21,3 +24,4 @@ class User
     @orders << order
   end
 end
+

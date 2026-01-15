@@ -1,3 +1,5 @@
+require('./store/product')
+
 class Order
   def initialize(items)
     @items = items

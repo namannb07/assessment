@@ -1,11 +1,17 @@
+require('./store/order')
+require('./store/product')
+
 class Cart
   def initialize
     @items = Hash.new(0)
   end
 
   def add_product(product, qty)
-    raise "Not enough stock" if product.quantity < qty
-    @items[product] +=  qty
+    if product.quantity < qty
+      puts "Not enough stock"
+    else 
+      @items[product] +=  qty
+    end
   end
 
   def empty?
@@ -26,6 +32,9 @@ class Cart
   end
 
   def view
+    if @items.size == 0
+      puts "Cart is empty"
+    end
     @items.each do |product, qty|
       puts "Product: #{product.name}  Quantity: #{qty}"
     end
