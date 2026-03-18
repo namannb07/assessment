@@ -1,0 +1,28 @@
+[property]
+gpu-id=0
+net-scale-factor=0.0039215697906911373
+model-color-format=0
+onnx-file=../models/rf_detr_nano.onnx
+model-engine-file=../models/rf_detr_nano.onnx_b1_gpu0_fp16.engine
+labelfile-path=labels.txt
+batch-size=1
+network-mode=2 # 0=FP32, 1=INT8, 2=FP16
+num-detected-classes=80
+interval=0
+gie-unique-id=1
+process-mode=1
+network-type=0 # 0=Detector
+cluster-mode=2 # Use NMS
+maintain-aspect-ratio=1
+symmetric-padding=1
+
+# TensorRT Optimization settings
+workspace-size=1024
+
+# For custom parsing if ONNX outputs need parsing
+# parse-bbox-func-name=NvDsInferParseCustomRFDETR
+# custom-lib-path=../parsers/libnvds_infercustomparser.so
+
+[class-attrs-all]
+nms-iou-threshold=0.45
+pre-cluster-threshold=0.25
