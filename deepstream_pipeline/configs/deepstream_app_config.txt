@@ -1,0 +1,96 @@
+[application]
+enable-perf-measurement=1
+perf-measurement-interval-sec=5
+
+[tiled-display]
+enable=1
+rows=1
+columns=1
+width=1280
+height=720
+gpu-id=0
+nvbuf-memory-type=0
+
+[source0]
+enable=1
+# Type - 1=CameraV4L2 2=URI 3=MultiURI 4=RTSP
+type=3
+num-sources=1
+# Update uri below to a valid video stream or file
+uri=file:///opt/nvidia/deepstream/deepstream/samples/streams/sample_1080p_h264.mp4
+gpu-id=0
+cudadec-memtype=0
+
+[streammux]
+gpu-id=0
+## Boolean property to inform muxer that sources are live
+live-source=0
+batch-size=1
+## time out in usec, to wait after the first buffer is available
+## to push the batch even if the complete batch is not formed
+batched-push-timeout=40000
+## Set muxer output width and height
+width=1920
+height=1080
+## Enable to maintain aspect ratio wrt source, and allow black borders
+enable-padding=0
+nvbuf-memory-type=0
+
+[primary-gie]
+enable=1
+gpu-id=0
+model-engine-file=../models/rf_detr_nano.onnx_b1_gpu0_fp16.engine
+batch-size=1
+# Required by the app to configure interval
+bbox-border-color-0=1;0;0;1
+bbox-border-color-1=0;1;1;1
+bbox-border-color-2=0;0;1;1
+bbox-border-color-3=0;1;0;1
+interval=0
+gie-unique-id=1
+nvbuf-memory-type=0
+config-file=config_infer_primary.txt
+
+[tracker]
+enable=1
+# For NvDCF and DeepSORT tracker, tracker-width and tracker-height must be a multiple of 32
+tracker-width=640
+tracker-height=384
+ll-lib-file=/opt/nvidia/deepstream/deepstream/lib/libnvds_nvmultiobjecttracker.so
+# ll-config-file required to set different tracker types
+# ll-config-file=/opt/nvidia/deepstream/deepstream/samples/configs/deepstream-app/config_tracker_NvDCF_perf.yml
+ll-config-file=/opt/nvidia/deepstream/deepstream/samples/configs/deepstream-app/config_tracker_IOU.yml
+gpu-id=0
+enable-batch-process=1
+enable-past-frame=1
+display-tracking-id=1
+
+[osd]
+enable=1
+gpu-id=0
+border-width=1
+text-size=15
+text-color=1;1;1;1
+text-bg-color=0.3;0.3;0.3;1
+font=Serif
+show-clock=0
+clock-x-offset=800
+clock-y-offset=820
+clock-text-size=12
+clock-color=1;0;0;0
+nvbuf-memory-type=0
+
+[sink0]
+enable=1
+# Type - 1=FakeSink 2=EglSink 3=File
+type=2
+sync=0
+display-id=0
+offset-x=0
+offset-y=0
+width=0
+height=0
+overlay-id=1
+source-id=0
+gpu-id=0
+nvbuf-memory-type=0
